@@ -14,14 +14,11 @@ data = {
     ],
     "label": ["factură", "formular", "chitanță", "cerere", "formular"],
 }
-
 df = pd.DataFrame(data)
-
 # Preprocesare și împărțirea datelor
 X = df["text"]
 y = df["label"]
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
-
 # Transformare text -> vectori folosind TF-IDF
 from sklearn.feature_extraction.text import TfidfVectorizer
 

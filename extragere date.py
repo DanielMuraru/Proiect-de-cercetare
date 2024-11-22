@@ -60,51 +60,48 @@ with open("processed_medical_records.json", "w") as outfile:
 
 print("Processing complete. Results saved to processed_medical_records.json.")
 
-#
-# # Load the SciBERT model
-# # nlp = spacy.load("en_core_sci_scibert")
-#
-# # Load the medical corpus
-# input_file = "corpus/medical_records_corpus.json"  # Replace with your file name
-# output_file = "processed_medical_records.json"
-#
-# # Read the corpus
-# with open(input_file, "r") as file:
-#     corpus = json.load(file)
-#
-# processed_records = []
-# k=0
-# # Process each record in the corpus
-# for record in corpus:
-#     text = f"Medical history: {', '.join(record['medical_history'])}. " \
-#            f"Diagnoses: {', '.join(record['current_diagnoses'])}. " \
-#            f"Treatments: {', '.join(record['treatments'])}."
-#     print(k)
-#     k+=1
-#     # Use spaCy's NLP pipeline
-#     doc = ner_pipeline(text)
-#
-#     # Extract entities recognized by the model
-#     entities = [
-#         {
-#             "text": ent.text,
-#             "start": ent.start_char,
-#             "end": ent.end_char,
-#             "label": ent.label_
-#         }
-#         for ent in doc.ents
-#     ]
-#
-#     # Add processed data to the record
-#     processed_record = {
-#         "record_id": record["record_id"],
-#         "original_text": text,
-#         "entities": entities
-#     }
-#     processed_records.append(processed_record)
-#
-# # Save the processed data
-# with open(output_file, "w") as file:
-#     json.dump(processed_records, file, indent=4)
-#
-# print(f"Processed records saved to {output_file}")
+
+# Load the SciBERT model
+# nlp = spacy.load("en_core_sci_scibert")
+
+# Load the medical corpus
+input_file = "corpus/medical_records_corpus.json"  # Replace with your file name
+output_file = "processed_medical_records_spacy.json"
+
+
+processed_records = []
+k=0
+# Process each record in the corpus
+for record in records:
+    text = f"Medical history: {', '.join(record['medical_history'])}. " \
+           f"Diagnoses: {', '.join(record['current_diagnoses'])}. " \
+           f"Treatments: {', '.join(record['treatments'])}."
+    print(k)
+    k+=1
+    # Use spaCy's NLP pipeline
+    doc = ner_pipeline(text)
+
+    # Extract entities recognized by the model
+    entities = [
+        {
+            "text": ent.text,
+            "start": ent.start_char,
+            "end": ent.end_char,
+            "label": ent.label_
+        }
+        for ent in doc.ents
+    ]
+
+    # Add processed data to the record
+    processed_record = {
+        "record_id": record["record_id"],
+        "original_text": text,
+        "entities": entities
+    }
+    processed_records.append(processed_record)
+
+# Save the processed data
+with open(output_file, "w") as file:
+    json.dump(processed_records, file, indent=4)
+
+print(f"Processed records saved to {output_file}")
